@@ -10,17 +10,17 @@ export const ProjectTypes: ProjectType[] = [
 	{ name: 'Next.js', value: 'nextjs' },
 ]
 
-export const handleProjectTypeBackgroundColor = (t: ProjectOptions) => {
+export const handleProjectTypeButtonColor = (t: ProjectOptions) => {
 	switch (t) {
 		case 'vite':
-			return 'bg-yellow-500 hover:bg-yellow-600 duration-100 ease-in-out'
+			return 'sky'
 		case 'sveltekit':
-			return 'bg-orange-500 hover:bg-orange-600 duration-100 ease-in-out'
+			return 'orange'
 		case 'nextjs':
-			return 'bg-[#323232] hover:bg-[#222222] duration-100 ease-in-out'
+			return 'indigo'
 		case 'general':
-			return 'bg-[#f8f9fa] text-dark hover:bg-[#f2f2f2] duration-100 ease-in-out'
+			return 'primary'
 		default:
-			return ''
+			return 'primary'
 	}
 }
