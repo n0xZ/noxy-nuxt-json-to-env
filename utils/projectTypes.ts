@@ -9,18 +9,3 @@ export const ProjectTypes: ProjectType[] = [
 	{ name: 'SvelteKit', value: 'sveltekit' },
 	{ name: 'Next.js', value: 'nextjs' },
 ]
-
-export const handleProjectTypeButtonColor = (t: ProjectOptions) => {
-	switch (t) {
-		case 'vite':
-			return 'sky'
-		case 'sveltekit':
-			return 'orange'
-		case 'nextjs':
-			return 'indigo'
-		case 'general':
-			return 'primary'
-		default:
-			return 'primary'
-	}
-}
