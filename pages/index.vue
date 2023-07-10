@@ -98,9 +98,11 @@
 		</section>
 	</main>
 	<footer
-		className="text-center p-8 border-t-2 border-[#1b1b1b] mt-6 text-[#4a4a4a] self-center"
+		className="text-center flex flex-row items-center justify-center space-x-2 p-8 border-t-2 border-[#1b1b1b] mt-6 text-[#4a4a4a] "
 	>
-		© 2023, n0xZ. Powered by <span class="text-emerald-500">Nuxt </span> +
-		<span class="text-sky-500">Netlify</span> 💚💙
+		<p>
+			© 2023, n0xZ. Powered by <span class="text-emerald-500">Nuxt </span> +
+			<span class="text-sky-500">Netlify</span> 💚💙
+		</p>
 	</footer>
 </template>
