@@ -1,8 +1,12 @@
 import { ref, computed } from 'vue'
+type OptionState = {
+	name: string
+	value: string
+}
 export const useJSONParser = () => {
 	const textareaInput = ref('')
 	const isOutputInvalid = ref(false)
-	const optionValue = ref('')
+	const optionState = ref<OptionState>({ name: 'General', value: '' })
 	const parseCamelCaseString = (s: string) => {
 		let initialValue = s
 		for (let i = 1; i < s.length; i++) {
@@ -13,10 +17,13 @@ export const useJSONParser = () => {
 		return initialValue
 	}
 	const parseInputToEnvValues = (s: string) => {
+		isOutputInvalid.value = false
 		try {
 			const parsedInput = JSON.parse(s)
 			const envValues = Object.entries(parsedInput).map(([v, i]) => {
-				return `${optionValue.value}${parseCamelCaseString(v).toUpperCase()}=${i}`
+				return `${optionState.value.value}${parseCamelCaseString(
+					v
+				).toUpperCase()}=${i}`
 			})
 			return envValues
 		} catch (e) {
@@ -33,6 +40,6 @@ export const useJSONParser = () => {
 		textareaInput,
 		textareaOutput,
 		isOutputInvalid,
-		optionValue,
+		optionState,
 	}
 }

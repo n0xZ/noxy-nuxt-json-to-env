@@ -1,25 +1,38 @@
 <script setup lang="ts">
+	import { useSeoMeta } from '#imports'
+	import { useJSONParser } from '~/composables/useJSONParser'
 	import { ProjectOptions, ProjectTypes } from '~/utils/projectTypes'
 
-	const { isOutputInvalid, textareaInput, textareaOutput, optionValue } =
+	useSeoMeta({
+		title: 'Noxy JSON Parser',
+		description:
+			'Copiá tu JSON y recibí tus variables de entorno para tus proyectos de Vite, NextJS y SvelteKit',
+	})
+
+	const { isOutputInvalid, textareaInput, textareaOutput, optionState } =
 		useJSONParser()
 
 	const toggleOption = (type: ProjectOptions) => {
 		switch (type.trim()) {
 			case 'vite':
-				optionValue.value = 'VITE_'
+				optionState.value = { name: 'Vite', value: 'VITE_' }
 				break
 			case 'nextjs':
-				optionValue.value = 'NEXT_PUBLIC_'
+				optionState.value = { value: 'NEXT_PUBLIC_', name: 'NextJs' }
 				break
 			case 'sveltekit':
-				optionValue.value = 'PUBLIC_'
+				optionState.value = { value: 'PUBLIC_', name: 'SvelteKit' }
 				break
 			default:
-				optionValue.value = ''
+				optionState.value = { name: 'General', value: '' }
 				break
 		}
 	}
+	const addToClipboard = () => {
+		const outputWithLinebreak = textareaOutput.value.replaceAll('\n', '\r\n')
+		navigator.clipboard.writeText(outputWithLinebreak)
+	}
+	const hasUserInsertedContent = computed(() => textareaInput.value.length > 10)
 </script>
 
 <template>
@@ -34,9 +47,8 @@
 						v-for="{ name, value } in ProjectTypes"
 						@click="toggleOption(value)"
 						:key="value"
-						class="w-24 text-center"
-						variant="outline"
-				color="primary"
+						variant="soft"
+						color="emerald"
 					>
 						{{ name }}
 					</UButton>
@@ -47,7 +59,7 @@
 					placeholder="{ 'name' :'gonzalo', 'surName':'omar'}"
 					name="jsonContent"
 					class="h-64"
-					color="violet"
+					color="sky"
 					autoresize
 					v-model="textareaInput"
 				/>
@@ -55,17 +67,16 @@
 
 			<UFormGroup
 				name="jsonResult"
-				label="Resultado del parseo"
+				:label="`Resultado del parseo para: ${optionState.name}`"
 				:error="isOutputInvalid"
 			>
 				<UTextarea
 					:placeholder="`NAME=Gonzalo ${'\n'}SUR_NAME=Omar`"
-					label="Resultado del parseo"
 					name="jsonResult"
 					class="h-64"
 					variant="outline"
-					color="primary"
-					:disabled="isOutputInvalid"
+					color="emerald"
+					disabled
 					autoresize
 					:value="textareaOutput"
 				/>
@@ -73,9 +84,22 @@
 					>El JSON ingresado es inválido.
 				</span>
 			</UFormGroup>
+			<UButton
+				@click="addToClipboard"
+				variant="soft"
+				color="emerald"
+				block
+				v-if="hasUserInsertedContent && !isOutputInvalid"
+				>Añadir al clipboard</UButton
+			>
 		</section>
 	</main>
-	<footer class="p-5 text-center">
-		<p>Tuki</p>
+	<footer
+		className="text-center p-8 border-t-2 border-[#1b1b1b] mt-6 text-[#4a4a4a]"
+	>
+		<p>
+			© 2023, n0xZ. Powered by <span class="text-emerald-500">Nuxt </span> +
+			<span class="text-sky-500">Netlify</span> 💚💙
+		</p>
 	</footer>
 </template>
