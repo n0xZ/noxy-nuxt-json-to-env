@@ -1,6 +1,9 @@
-
-
 <template>
+	<div>
+		<UContainer>
+			<NuxtPage />
+		</UContainer>
 
-  <NuxtPage />
+		<UNotifications icon="i-heroicons-check-badge" />
+	</div>
 </template>
