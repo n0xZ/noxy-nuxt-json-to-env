@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
+  '@iconify-json/heroicons':
+    specifier: ^1.1.11
+    version: 1.1.11
   '@nuxt/devtools':
     specifier: latest
     version: 0.6.7(nuxt@3.6.2)(vite@4.4.2)

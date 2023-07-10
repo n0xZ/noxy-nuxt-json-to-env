@@ -4,5 +4,5 @@ export default defineNuxtConfig({
 	modules: ['@nuxthq/ui'],
 
 	app: { head: { htmlAttrs: { class: 'dark' } } },
-	ui: { notifications: { position: 'top-0 right-0' } },
+	ui: { notifications: { position: 'top-0 right-0', icons: 'all' } },
 })
