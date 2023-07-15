@@ -7,24 +7,26 @@ export const useJSONParser = () => {
 	const textareaInput = ref('')
 	const isOutputInvalid = ref(false)
 	const optionState = ref<OptionState>({ name: 'General', value: '' })
-	const parseCamelCaseString = (s: string) => {
-		let initialValue = s
-		for (let i = 1; i < s.length; i++) {
-			if (s[i] === s[i].toUpperCase()) {
-				initialValue = initialValue.replace(s[i], `_${s[i]}`)
+	const parseObjectPropertyToEnv = (s: string): string => {
+		return s.replace(/([A-Z])|(-)/g, (match, p1, p2) => {
+			if (p1) {
+				return `_${p1.toLowerCase()}`
+			} else if (p2) {
+				return '_'
 			}
-		}
-		return initialValue
+			return match
+		})
 	}
 	const parseInputToEnvValues = (s: string) => {
 		isOutputInvalid.value = false
 		try {
 			const parsedInput = JSON.parse(s)
-			const envValues = Object.entries(parsedInput).map(([v, i]) => {
-				return `${optionState.value.value}${parseCamelCaseString(
-					v
-				).toUpperCase()}=${i}`
-			})
+			const envValues = Object.entries(parsedInput).map(
+				([v, i]) =>
+					`${optionState.value.value}${parseObjectPropertyToEnv(
+						v
+					).toUpperCase()}=${i}`
+			)
 			return envValues
 		} catch (e) {
 			isOutputInvalid.value = true
